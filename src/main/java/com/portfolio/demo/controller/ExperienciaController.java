@@ -4,7 +4,6 @@ import com.portfolio.demo.dto.ExperienciaDto;
 import com.portfolio.demo.model.Experiencia;
 import com.portfolio.demo.security.controller.Mensaje;
 import com.portfolio.demo.service.ExperienciaService;
-/* import com.portfolio.demo.security.controller.Mensaje; */
 import io.micrometer.common.util.StringUtils;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +36,7 @@ public class ExperienciaController {
     @GetMapping("/detalle/{id}")
     public ResponseEntity<?> getById(@PathVariable("id") Long id) {
         if(!experienciaServicio.existsById(id))
-            return new ResponseEntity(new Mensaje ("La experiencia no existe"),HttpStatus.NOT_FOUND);
+            return new ResponseEntity(new Mensaje ("No se ha encontrado la experiencia"),HttpStatus.NOT_FOUND);
         Experiencia experiencia = experienciaServicio.getOne(id).get();
         return new ResponseEntity(experiencia, HttpStatus.OK);
     }
@@ -61,10 +60,10 @@ public class ExperienciaController {
     @PutMapping("/actualizar/{id}")
     public ResponseEntity<?> actualizar(@PathVariable("id") Long id, @RequestBody ExperienciaDto expDto) {
         if (!experienciaServicio.existsById(id)) {
-            return new ResponseEntity(new Mensaje("No se ha encontrado la ID"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(new Mensaje("No se ha encontrado la experiencia"), HttpStatus.BAD_REQUEST);
         }
 
-        if (experienciaServicio.existsByCargo(expDto.getCargo()) && (experienciaServicio.getByCargo(expDto.getCargo()).get().getId()) != id) {
+        if (experienciaServicio.existsByCargo(expDto.getCargo()) && experienciaServicio.getByCargo(expDto.getCargo()).get().getId() != id) { /*REVISAR*/
             return new ResponseEntity(new Mensaje("La experiencia ya ha sido guardada"), HttpStatus.BAD_REQUEST);
         }
 
@@ -85,7 +84,7 @@ public class ExperienciaController {
     @DeleteMapping("/borrar/{id}")
     public ResponseEntity <?> borrar(@PathVariable("id") Long id) {
         if (!experienciaServicio.existsById(id)) {
-            return new ResponseEntity(new Mensaje("No se ha encontrado la ID"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(new Mensaje("No se ha encontrado la experiencia"), HttpStatus.BAD_REQUEST);
         }
         experienciaServicio.delete(id);
         return new ResponseEntity(new Mensaje("La experiencia ha sido eliminada con éxito"), HttpStatus.OK);

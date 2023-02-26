@@ -18,13 +18,13 @@ public class Educacion {
     private String titulo;
     private String institucionEd;
     private String descripcion;
-    private String fechaInicio;
-    private String fechaFin;
+    private int fechaInicio;
+    private int fechaFin;
 
     public Educacion() {
     }
 
-    public Educacion(String titulo, String institucionEd, String descripcion, String fechaInicio, String fechaFin) {
+    public Educacion(String titulo, String institucionEd, String descripcion, int fechaInicio, int fechaFin) {
         this.titulo = titulo;
         this.institucionEd = institucionEd;
         this.descripcion = descripcion;
